@@ -9,7 +9,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF164650),
+        leading: const Icon(Icons.abc),
+      ),
       backgroundColor: Colors.white,
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -55,15 +58,17 @@ class LoginScreen extends StatelessWidget {
 
 
        RoundedButton(child: TextButton(
-        onPressed: (){},
-        style: ButtonStyle(
-          padding:const MaterialStatePropertyAll(
+        onPressed: (){
+          Navigator.pushNamed(context, '/controller_screeen');
+        },
+        style:const ButtonStyle(
+          padding: MaterialStatePropertyAll(
             EdgeInsets.symmetric(vertical: 20,horizontal: 20),
           ),
           backgroundColor: MaterialStatePropertyAll(
-            Colors.green.shade500
+            Color(0xFFE6940F)
           ),
-          foregroundColor:const MaterialStatePropertyAll(
+          foregroundColor: MaterialStatePropertyAll(
             Colors.black
           )
         ),
@@ -78,7 +83,7 @@ class LoginScreen extends StatelessWidget {
             EdgeInsets.symmetric(vertical: 20,horizontal: 20),
           ),
           backgroundColor: MaterialStatePropertyAll(
-            Colors.black
+             Color(0xFF164650)
           ),
           foregroundColor: MaterialStatePropertyAll(
             Colors.white

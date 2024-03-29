@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shade_style/screens/address_screen.dart';
+import 'package:shade_style/controller_screen.dart';
 import 'package:shade_style/screens/login_screen.dart';
-import 'package:shade_style/screens/password_screen.dart';
+import 'package:shade_style/screens/profile_page.dart';
 import 'package:shade_style/screens/register_screen.dart';
 // import 'package:shade_style/screens/splash_screen.dart';
 
@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
         // '/': (context) => const SplashScreen(),
         '/':(context) => const LoginScreen(),
         '/register':(context) => const RegisterScreen(),
-        '/address_screen':(context) => const AddressScreen(),
-        '/password_setting_screen':(context) => const PasswordScreen(),
+        '/controller_screeen':(context) => const ControllerScreen(),
+        '/profile_screen':(context) => const ProfileScreen()
       },
     );
   }
