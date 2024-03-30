@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shade_style/screens/add_to_cart.dart';
 import 'package:shade_style/screens/camera_screen.dart';
@@ -13,13 +14,16 @@ class ControllerScreen extends StatefulWidget {
 
 class _ControllerScreenState extends State<ControllerScreen> {
   var _selectedIndex = 0;
+   void signOut()=>FirebaseAuth.instance.signOut();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(actions: [
         IconButton(onPressed: (){
           Navigator.pushNamed(context, '/profile_screen');
-        }, icon:const Icon(Icons.person_2_rounded) )
+        }, icon:const Icon(Icons.person_2_rounded) ),
+
+        IconButton(onPressed: (){ signOut();}, icon:const Icon(Icons.logout_rounded))
       ],
       leading:const Icon(Icons.abc),
       backgroundColor: const Color(0xFF164650),

@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Text("Username", style: TextStyle(color: Colors.grey.shade600,
                   fontWeight: FontWeight.w700),),
             
-                  IconButton(onPressed: (){}, icon: Icon(Icons.edit_attributes_rounded,color: Colors.grey.shade600,))
+                  IconButton(onPressed: (){}, icon: Icon(Icons.edit_attributes_rounded,color: Colors.grey.shade600,)),
                 ],
               ),
             )
