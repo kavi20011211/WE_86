@@ -1,11 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shade_style/components/rounded_button.dart';
 import 'package:shade_style/components/textfield_container.dart';
 
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+   final TextEditingController _username = TextEditingController();
+ final TextEditingController _password = TextEditingController();
+  //user sign in function
+  Future <bool> _signInWithUsernameAndPassword(String username,String password)async{
+    try {
+  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: username,
+    password: password
+  );
+  return true;
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'user-not-found') {
+    print('No user found for that email.');
+  } else if (e.code == 'wrong-password') {
+    print('Wrong password provided for that user.');
+  }
+  return false;
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +51,17 @@ class LoginScreen extends StatelessWidget {
         fontWeight: FontWeight.w900,
         fontFamily: "Days one"
        ),),
-      const TextFieldContainer(child: TextField(
-        decoration: InputDecoration(
+      TextFieldContainer(child: TextField(
+        controller: _username,
+        decoration:const InputDecoration(
           border: InputBorder.none,
-          hintText: "username"
+          hintText: "username or email"
         ),
        )),
-       const TextFieldContainer(child: TextField(
-        decoration: InputDecoration(
+       TextFieldContainer(child: TextField(
+        obscureText: true,
+        controller: _password,
+        decoration:const InputDecoration(
           border: InputBorder.none,
           hintText: "password"
         ),
@@ -58,8 +86,25 @@ class LoginScreen extends StatelessWidget {
 
 
        RoundedButton(child: TextButton(
-        onPressed: (){
-          Navigator.pushNamed(context, '/controller_screeen');
+        onPressed: ()async{
+          bool isSuccess =await _signInWithUsernameAndPassword(_username.text, _password.text);
+          if(isSuccess == true){
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("You are logged in.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+            Navigator.pushNamed(context, '/controller_screeen');
+          }else{
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Something wrong! try again.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+          }
+          
         },
         style:const ButtonStyle(
           padding: MaterialStatePropertyAll(

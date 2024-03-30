@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../components/rounded_button.dart';
 import '../components/textfield_container.dart';
@@ -32,10 +33,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
     await _users.add({"firstname":firstname,"lastname":lastname,"email":email,
     "phone":phone,"address":address,"postalcode":postal,"country":country,"password":password,
     "confirmpassword":confirmpassword});
+
+    _createUserWithEmailPass(email, password);
+    
     return true;
   }catch(e){
     print(e);
     return false;
+  }
+ }
+
+ Future<void> _createUserWithEmailPass(String email, String password)async{
+  try{
+    final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+  }on FirebaseAuthException catch (e){
+    print(e);
+  }catch(e){
+    print(e);
   }
  }
 
@@ -160,15 +177,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   dismissDirection: DismissDirection.up,
                 ));
             }
-            await _createUser( _firstname.text, _lastname.text, _address.text,_confirmpassword.text, _country.text,
-            _email.text,_password.text, _phone.text,_postal.text);
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            bool isSuccess = await _createUser( _firstname.text, _lastname.text, _email.text,_phone.text, _address.text,
+            _postal.text,_country.text, _password.text,_confirmpassword.text);
+            if(isSuccess == true){
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("You are registered succussfully!.", style: TextStyle(color: Colors.white),),
                   backgroundColor: Colors.grey,
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   dismissDirection: DismissDirection.up,
                 ));
-            Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, '/');
+            }else{
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Something went wrong! please try again.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+            }
+            
           },
           style:const ButtonStyle(
             padding: MaterialStatePropertyAll(
