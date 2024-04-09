@@ -45,7 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
  Future<void> _createUserWithEmailPass(String email, String password)async{
   try{
-    final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
     email: email,
     password: password,
   );
