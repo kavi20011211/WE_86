@@ -176,8 +176,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   dismissDirection: DismissDirection.up,
                 ));
-            }
-            bool isSuccess = await _createUser( _firstname.text, _lastname.text, _email.text,_phone.text, _address.text,
+            }else if(_firstname.text.isEmpty||_lastname.text.isEmpty||_email.text.isEmpty
+            ||_phone.text.isEmpty||_address.text.isEmpty||_postal.text.isEmpty||
+            _country.text.isEmpty|| _confirmpassword.text.isEmpty||_password.text.isEmpty){
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("All fields are required! please try again.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+            }else{
+              bool isSuccess = await _createUser( _firstname.text, _lastname.text, _email.text,_phone.text, _address.text,
             _postal.text,_country.text, _password.text,_confirmpassword.text);
             if(isSuccess == true){
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -195,6 +204,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   dismissDirection: DismissDirection.up,
                 ));
             }
+            }
+            
             
           },
           style:const ButtonStyle(
