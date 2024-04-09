@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //user sign in function
   Future <bool> _signInWithUsernameAndPassword(String username,String password)async{
     try {
-  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: username,
     password: password
   );
