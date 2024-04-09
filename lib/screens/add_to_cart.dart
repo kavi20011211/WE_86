@@ -38,7 +38,8 @@ Future <void> _deleteCartItem(String productID) async{
           builder: (context, AsyncSnapshot<QuerySnapshot>streamSnapshot) {
             if(streamSnapshot.hasData){     //if row has data
               return Column(
-          children:[ Expanded(
+          children:[ 
+            Expanded(
             child: Card(
               margin:const EdgeInsets.fromLTRB(20, 30, 20, 0),
               child: ListView.builder(
