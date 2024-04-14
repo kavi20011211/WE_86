@@ -181,7 +181,15 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(onPressed: (){},backgroundColor: const Color(0xFFE6940F),child:const Icon(Icons.question_mark_rounded,color: Colors.white,)),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        showDialog(context: context, builder: (BuildContext context){
+          return const AlertDialog(
+            actions: [Icon(Icons.book_rounded,color: Colors.green,)],
+            title: Text("Guide",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+            content: Text("From this you can find out matching colors, Here are the steps: 1. Select an image from device or camera. 2. Scan the image and get the matching colors."),
+          );
+        });
+      },backgroundColor: const Color(0xFFE6940F),child:const Icon(Icons.question_mark_rounded,color: Colors.white,)),
     );
   }
   
