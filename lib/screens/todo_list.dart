@@ -83,6 +83,8 @@ Future<void> _createTaskItemForm()async{
     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
     dismissDirection: DismissDirection.up,
     ));
+    _taskname.text="";
+    _additionaldetails.text="";
           }else{
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
     content: Text("Something went wrong!, try again", style: TextStyle(color: Colors.white),),
