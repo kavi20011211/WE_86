@@ -83,10 +83,16 @@ Future <void> _deleteCartItem(String productID) async{
 
           },
         )),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(onPressed: (){},
-            backgroundColor:const Color(0xFFE6940F),
-            child:const Icon(Icons.question_mark_rounded,color: Colors.white),),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton(onPressed: (){
+        showDialog(context: context, builder: (BuildContext context){
+          return const AlertDialog(
+            actions: [Icon(Icons.book_rounded,color: Colors.green,)],
+            title: Text("Guide",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+            content: Text("You can add items to your wishlist by clicking heart button. You can delete an item by a longpress"),
+          );
+        });
+      },backgroundColor: const Color(0xFFE6940F),child:const Icon(Icons.question_mark_rounded,color: Colors.white,)),
     );
   }
 }

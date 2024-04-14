@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shade_style/authPage.dart';
 import 'package:shade_style/screens/add_to_cart.dart';
 import 'package:shade_style/screens/camera_screen.dart';
+import 'package:shade_style/screens/settings_screen.dart';
 import 'package:shade_style/screens/todo_list.dart';
 
 class ControllerScreen extends StatefulWidget {
@@ -46,7 +47,7 @@ class _ControllerScreenState extends State<ControllerScreen> {
       ),
 
 
-      body:_selectedIndex==3? const AddtoCartScreen():_selectedIndex == 1? const TodoListScreen():_selectedIndex ==2? const CameraScreen():null,
+      body:_selectedIndex==3? const AddtoCartScreen():_selectedIndex == 1? const TodoListScreen():_selectedIndex ==2? const CameraScreen():_selectedIndex==4?const SettingsScreen():null,
 
 
       bottomNavigationBar: CurvedNavigationBar(
