@@ -69,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-      
+          color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,6 +79,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 fontSize: 24,
                 fontWeight: FontWeight.w900
               ),),
+
+              Container(
+        height: 150,
+        width: 150,
+
+        decoration:const BoxDecoration(
+          image: DecorationImage(image: AssetImage('images/signup.jpg'))
+        ),
+       ),
       
           TextFieldContainer(child: TextField(
             controller: _firstname,
