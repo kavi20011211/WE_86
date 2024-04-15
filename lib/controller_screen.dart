@@ -1,7 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:shade_style/screens/HomePage.dart';
+
 import 'package:shade_style/authPage.dart';
+
 import 'package:shade_style/screens/add_to_cart.dart';
 import 'package:shade_style/screens/camera_screen.dart';
 import 'package:shade_style/screens/settings_screen.dart';
@@ -47,19 +51,20 @@ class _ControllerScreenState extends State<ControllerScreen> {
       ),
 
 
-      body:_selectedIndex==3? const AddtoCartScreen():_selectedIndex == 1? const TodoListScreen():_selectedIndex ==2? const CameraScreen():_selectedIndex==4?const SettingsScreen():null,
+
+      body:_selectedIndex==3? const AddtoCartScreen():_selectedIndex == 1? const TodoListScreen():_selectedIndex ==2? const CameraScreen():_selectedIndex==4?const SettingsScreen():_selectedIndex == 0? HomePage(): null,
 
 
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
         onTap: (index) {
           setState(() {
-                _selectedIndex = index;
-              });
+            _selectedIndex = index;
+          });
         },
         height: 50,
-        color:const Color(0xFF164650),
-        items:const [
+        color: const Color(0xFF164650),
+        items: const [
           Icon(
             Icons.home,
             size: 30,
