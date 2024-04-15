@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddtoCartScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ Future <void> _deleteCartItem(String productID) async{
         width: MediaQuery.of(context).size.width,
 
         child:StreamBuilder(
-          stream: _addtocart.snapshots(),
+          stream: _addtocart.where("userID",isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot>streamSnapshot) {
             if(streamSnapshot.hasData){     //if row has data
               return Column(
@@ -56,7 +57,7 @@ Future <void> _deleteCartItem(String productID) async{
                   fontWeight: FontWeight.bold
                 ),),
                 tileColor:const Color(0xFF2C2430),
-                subtitle: Text(documentSnapshot['productDetails'], style:const TextStyle(
+                subtitle:const Text("No description", style:const TextStyle(
                   color: Color(0xFFF7EEC9),
                 ),),
                 onLongPress: () {

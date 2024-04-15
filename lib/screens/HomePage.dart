@@ -6,10 +6,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF164650),
-        leading: const Icon(Icons.abc),
-      ),
       body: ListView(
         children: [
           Container(
