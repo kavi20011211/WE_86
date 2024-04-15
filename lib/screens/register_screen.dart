@@ -51,18 +51,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  Future<void> _createUserWithEmailPass(String email, String password) async {
-    try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    } catch (e) {
-      print(e);
-    }
+
+ Future<void> _createUserWithEmailPass(String email, String password)async{
+  try{
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+  }on FirebaseAuthException catch (e){
+    print(e);
+  }catch(e){
+    print(e);
   }
 
   @override
@@ -81,6 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
+          color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,6 +90,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 fontSize: 24,
                 fontWeight: FontWeight.w900
               ),),
+
+              Container(
+        height: 150,
+        width: 150,
+
+        decoration:const BoxDecoration(
+          image: DecorationImage(image: AssetImage('images/signup.jpg'))
+        ),
+       ),
       
           TextFieldContainer(child: TextField(
             controller: _firstname,

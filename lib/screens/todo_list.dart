@@ -41,6 +41,61 @@ Future <bool> _createTask(String id,String taskname, String additionaldetails)as
 
 }
 
+Future<void>_editTaskItem([DocumentSnapshot?documentSnapshot])async{
+  final TextEditingController taskName = TextEditingController();
+  final TextEditingController additionaldetails = TextEditingController();
+
+  if(documentSnapshot!=null){
+    taskName.text = documentSnapshot['taskName'];
+    additionaldetails.text = documentSnapshot['additionalDetails'];
+  }
+
+  await showModalBottomSheet(isScrollControlled: true,context: context, builder: (BuildContext context){
+    return Padding(padding: EdgeInsets.only(
+      top: 20,
+        left: 20,
+        right: 20,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 20
+    ),child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            controller: taskName,
+            
+            decoration:const InputDecoration(
+              hintText: "Type here",
+            ),
+          ),
+          TextField(
+            controller: additionaldetails,
+            
+            decoration:const InputDecoration(
+              hintText: "Type here",
+            ),
+          ),
+
+          RoundedButton(child: TextButton(onPressed: ()async{
+            await _wishlist.doc(documentSnapshot!.id)
+            .update({'taskName':taskName.text,'additionalDetails':additionaldetails.text});
+            taskName.text='';
+            additionaldetails.text='';
+          },
+          style: const ButtonStyle(
+          padding: MaterialStatePropertyAll(
+            EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+          ),
+          backgroundColor: MaterialStatePropertyAll(
+             Color(0xFFE6940F)
+          ),
+          foregroundColor: MaterialStatePropertyAll(
+            Colors.black
+          )
+        ),child:const Text("Update"),),)
+        ]));
+  }
+);}
+
 Future<void> _createTaskItemForm()async{
   String currentUserID = auth.currentUser!.uid;
   final TextEditingController _taskname = TextEditingController();
@@ -83,6 +138,8 @@ Future<void> _createTaskItemForm()async{
     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
     dismissDirection: DismissDirection.up,
     ));
+    _taskname.text="";
+    _additionaldetails.text="";
           }else{
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
     content: Text("Something went wrong!, try again", style: TextStyle(color: Colors.white),),
@@ -142,7 +199,9 @@ Future<void> _createTaskItemForm()async{
                 title: Text(documentSnapshot['taskName'],style:const TextStyle(color:  Color(0xFFF7EEC9),fontWeight: FontWeight.bold),),
                 subtitle: Text(documentSnapshot['additionalDetails'], style:const TextStyle(color:  Color(0xFFF7EEC9),),),
                 tileColor:const Color(0xFF2C2430),
-                trailing: IconButton(onPressed: (){}, icon:const Icon(Icons.edit_attributes_rounded,color: Colors.white,)),
+                trailing: IconButton(onPressed: ()async{
+                  await _editTaskItem(documentSnapshot);
+                }, icon:const Icon(Icons.edit,color: Colors.white,)),
                 onLongPress: () async{
                   //delete when long press
                   await _deleteTaskItem(documentSnapshot.id);
