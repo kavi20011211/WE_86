@@ -1,11 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:shade_style/screens/HomePage.dart';
-
-import 'package:shade_style/authPage.dart';
-
 import 'package:shade_style/screens/add_to_cart.dart';
 import 'package:shade_style/screens/camera_screen.dart';
 import 'package:shade_style/screens/settings_screen.dart';
@@ -22,9 +18,7 @@ class _ControllerScreenState extends State<ControllerScreen> {
   var _selectedIndex = 0;
     bool signOut(){
     FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-                      
-     MaterialPageRoute(builder: ((context) => const AuthPage())));
+    Navigator.pushNamed(context, '/');
      return true;
    }
   @override

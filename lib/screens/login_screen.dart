@@ -100,13 +100,14 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: ()async{
             bool isSuccess =await _signInWithUsernameAndPassword(_username.text, _password.text);
             if(isSuccess == true){
+               Navigator.pushNamed(context,'/controller_screeen');
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("You are logged in.", style: TextStyle(color: Colors.white),),
                     backgroundColor: Colors.grey,
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     dismissDirection: DismissDirection.up,
                   ));
-              Navigator.pushNamed(context, '/controller_screeen');
+              
             }else{
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Something wrong! try again.", style: TextStyle(color: Colors.white),),
