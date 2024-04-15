@@ -1,7 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:shade_style/screens/HomePage.dart';
+
+import 'package:shade_style/authPage.dart';
+
 import 'package:shade_style/screens/add_to_cart.dart';
 import 'package:shade_style/screens/camera_screen.dart';
 import 'package:shade_style/screens/todo_list.dart';
@@ -15,25 +19,34 @@ class ControllerScreen extends StatefulWidget {
 
 class _ControllerScreenState extends State<ControllerScreen> {
   var _selectedIndex = 0;
-  void signOut() => FirebaseAuth.instance.signOut();
+    bool signOut(){
+    FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+                      
+     MaterialPageRoute(builder: ((context) => const AuthPage())));
+     return true;
+   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profile_screen');
-              },
-              icon: const Icon(Icons.person_2_rounded)),
-          IconButton(
-              onPressed: () {
-                signOut();
-              },
-              icon: const Icon(Icons.logout_rounded))
-        ],
-        leading: const Icon(Icons.abc),
-        backgroundColor: const Color(0xFF164650),
+      appBar: AppBar(actions: [
+        IconButton(onPressed: (){
+          Navigator.pushNamed(context, '/profile_screen');
+        }, icon:const Icon(Icons.person_2_rounded) ),
+
+        IconButton(onPressed: (){ 
+         bool isSuccuss =  signOut();
+         if(isSuccuss==true){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("You have logged out succussfully.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+         }}, icon:const Icon(Icons.logout_rounded))
+      ],
+      leading:const Icon(Icons.abc),
+      backgroundColor: const Color(0xFF164650),
       ),
       body: _selectedIndex == 3
           ? const AddtoCartScreen()

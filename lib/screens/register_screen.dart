@@ -85,169 +85,152 @@ class _RegisterScreenState extends State<RegisterScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "Register here",
-                style: TextStyle(
-                    fontFamily: 'Days one',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900),
-              ),
-              TextFieldContainer(
-                  child: TextField(
-                controller: _firstname,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "First name",
-                    suffixIcon: Icon(Icons.person_2_rounded)),
-              )),
-              TextFieldContainer(
-                  child: TextField(
-                controller: _lastname,
-                decoration: const InputDecoration(
-                    border: InputBorder.none, hintText: "Last name"),
-              )),
-              TextFieldContainer(
-                  child: TextField(
-                controller: _email,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Email",
-                    suffixIcon: Icon(Icons.email_rounded)),
-              )),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: TextFieldContainer(
-                    child: TextField(
-                  controller: _phone,
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Phone",
-                      suffixIcon: Icon(Icons.phone_android_rounded)),
-                )),
-              ),
-              TextFieldContainer(
-                  child: TextField(
-                controller: _address,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Address",
-                    suffixIcon: Icon(Icons.home_rounded)),
-              )),
-              TextFieldContainer(
-                  child: TextField(
-                controller: _postal,
-                decoration: const InputDecoration(
-                    border: InputBorder.none, hintText: "Postal code"),
-              )),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: TextFieldContainer(
-                    child: TextField(
-                  controller: _country,
-                  decoration: const InputDecoration(
-                      border: InputBorder.none, hintText: "Country"),
-                )),
-              ),
-              TextFieldContainer(
-                  child: TextField(
-                controller: _password,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Password",
-                  suffixIcon: Icon(Icons.key_rounded),
-                ),
-              )),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: TextFieldContainer(
-                    child: TextField(
-                  controller: _confirmpassword,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Confirm password",
-                      suffixIcon: Icon(Icons.key_rounded)),
-                )),
-              ),
-              RoundedButton(
-                child: TextButton(
-                    onPressed: () async {
-                      if (_confirmpassword.text != _password.text) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text(
-                            "Passwords are mismatched! try again.",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          backgroundColor: Colors.grey,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          dismissDirection: DismissDirection.up,
-                        ));
-                      }
-                      bool isSuccess = await _createUser(
-                          _firstname.text,
-                          _lastname.text,
-                          _email.text,
-                          _phone.text,
-                          _address.text,
-                          _postal.text,
-                          _country.text,
-                          _password.text,
-                          _confirmpassword.text);
-                      if (isSuccess == true) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text(
-                            "You are registered succussfully!.",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          backgroundColor: Colors.grey,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          dismissDirection: DismissDirection.up,
-                        ));
-                        Navigator.pushNamed(context, '/test_screen');
-                      } else {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text(
-                            "Something went wrong! please try again.",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          backgroundColor: Colors.grey,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          dismissDirection: DismissDirection.up,
-                        ));
-                      }
-                    },
-                    style: const ButtonStyle(
-                        padding: MaterialStatePropertyAll(
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                        ),
-                        backgroundColor:
-                            MaterialStatePropertyAll(Color(0xFFE6940F)),
-                        foregroundColor:
-                            MaterialStatePropertyAll(Colors.black)),
-                    child: const Text("Submit")),
-              ),
-              // RoundedButton(
-              //   child: TextButton(
-              //       onPressed: () {
-              //         Navigator.pushNamed(context, '/test_screen');
-              //       },
-              //       style: const ButtonStyle(
-              //           padding: MaterialStatePropertyAll(
-              //             EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              //           ),
-              //           backgroundColor:
-              //               MaterialStatePropertyAll(Color(0xFF164650)),
-              //           foregroundColor:
-              //               MaterialStatePropertyAll(Colors.white)),
-              //       child: const Text("Take Exam")),
-              // ),
+            const  Text("Register here", style: TextStyle(
+                fontFamily: 'Days one',
+                fontSize: 24,
+                fontWeight: FontWeight.w900
+              ),),
+      
+          TextFieldContainer(child: TextField(
+            controller: _firstname,
+          decoration:const InputDecoration(
+            border: InputBorder.none,
+            hintText: "First name",
+            suffixIcon: Icon(Icons.person_2_rounded)
+          ),
+         )),
+      
+         TextFieldContainer(child: TextField(
+          controller: _lastname,
+          decoration:const InputDecoration(
+            border: InputBorder.none,
+            hintText: "Last name"
+          ),
+         )),
+      
+         TextFieldContainer(child: TextField(
+          controller: _email,
+          decoration:const InputDecoration(
+            border: InputBorder.none,
+            hintText: "Email",
+            suffixIcon: Icon(Icons.email_rounded)
+          ),
+         )),
+      
+         Padding( padding:const EdgeInsets.only(bottom: 15),
+           child:TextFieldContainer(child: TextField(
+            controller: _phone,
+            decoration:const InputDecoration(
+              border: InputBorder.none,
+              hintText: "Phone",
+              suffixIcon: Icon(Icons.phone_android_rounded)
+            ),
+           )),
+         ),
+
+        TextFieldContainer(child: TextField(
+          controller: _address,
+          decoration:const InputDecoration(
+            border: InputBorder.none,
+            hintText: "Address",
+            suffixIcon: Icon(Icons.home_rounded)
+          ),
+         )),
+
+         TextFieldContainer(child: TextField(
+          controller: _postal,
+          decoration:const InputDecoration(
+            border: InputBorder.none,
+            hintText: "Postal code"
+          ),
+         )),
+
+         Padding( padding:const EdgeInsets.only(bottom: 15),
+           child: TextFieldContainer(child: TextField(
+            controller: _country,
+            decoration:const InputDecoration(
+              border: InputBorder.none,
+              hintText: "Country"
+            ),
+           )),
+         ),
+
+         
+         TextFieldContainer(child: TextField(
+          controller: _password,
+          obscureText: true,
+          decoration:const InputDecoration(
+            border: InputBorder.none,
+            hintText: "Password",
+            suffixIcon: Icon(Icons.key_rounded),
+          ),
+         )),
+
+        Padding( padding:const EdgeInsets.only(bottom: 20),
+          child: TextFieldContainer(child: TextField(
+            controller: _confirmpassword,
+            obscureText: true,
+            decoration:const InputDecoration(
+              border: InputBorder.none,
+              hintText: "Confirm password",
+              suffixIcon: Icon(Icons.key_rounded)
+            ),
+           )),
+        ),
+      
+         RoundedButton(child: TextButton(
+          onPressed: ()async{
+            if(_confirmpassword.text!=_password.text){
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Passwords are mismatched! try again.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+            }else if(_firstname.text.isEmpty||_lastname.text.isEmpty||_email.text.isEmpty
+            ||_phone.text.isEmpty||_address.text.isEmpty||_postal.text.isEmpty||
+            _country.text.isEmpty|| _confirmpassword.text.isEmpty||_password.text.isEmpty){
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("All fields are required! please try again.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+            }else{
+              bool isSuccess = await _createUser( _firstname.text, _lastname.text, _email.text,_phone.text, _address.text,
+            _postal.text,_country.text, _password.text,_confirmpassword.text);
+            if(isSuccess == true){
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("You are registered succussfully!.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+                Navigator.pushNamed(context, '/');
+            }else{
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Something went wrong! please try again.", style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+            }
+            }
+            
+            
+          },
+          style:const ButtonStyle(
+            padding: MaterialStatePropertyAll(
+              EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+            ),
+            backgroundColor: MaterialStatePropertyAll(
+              Color(0xFFE6940F)
+            ),
+            foregroundColor: MaterialStatePropertyAll(
+              Colors.black
+            )
+          ),
+           child:const Text("Submit")),),
             ],
           ),
         ),
