@@ -1,42 +1,42 @@
 {
     "Black":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Red","Orange","White","Yellow","Blue","Green","Purple"],
+      "HashColorCode":["ff0000","ff8600","ffffff","ffff00","0102fd","015c00","000027"]
     },
     "Blue":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Pink","Red","Yellow","White","Black","Purple","Grey"],
+      "HashColorCode":["ff9999","ff0000","ffff00","ffffff","000000","000027","aaaaaa"]
     },
     "White":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Black","Green","Blue","Red","Brown","Orange","Pink"],
+      "HashColorCode":["000000","015c00","0102fd","ff0000","5a270f","ff8600","ff9999"]
     },
     "Red":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Blue","Grey","White","Black","Pink","Beige"],
+      "HashColorCode":["0102fd","aaaaaa","ffffff","000000","ff9999","e5deca"]
     },
     "Green":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Orange","Purple","White","Black","Yellow","Beige"],
+      "HashColorCode":["ff8600","000027","ffffff","000000","ffff00","e5deca"]
     },
     "Brown":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Beige","White","Black","Orange"],
+      "HashColorCode":["e5deca","ffffff","000000","ff8600"]
     },
     "Purple":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Orange","Grey","Green","White","Black","Beige","Blue"],
+      "HashColorCode":["ff8600","aaaaaa","015c00","ffffff","000000","e5deca","0102fd"]
     },
     "Orange":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Green","Beige","Blue","White","Black","Brown"],
+      "HashColorCode":["015c00","e5deca","0102fd","ffffff","000000","5a270f"]
     },
     "Yellow":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Green","Blue","White","Black","Beige"],
+      "HashColorCode":["015c00","0102fd","ffffff","000000","e5deca"]
     },
     "Grey":{
-      "MatchingColors":[],
-      "HashColorCode":[]
+      "MatchingColors":["Pink","Red","Blue","Purple","White","Black"],
+      "HashColorCode":["ff9999","ff0000","0102fd","000027","ffffff","000000"]
     }
   }

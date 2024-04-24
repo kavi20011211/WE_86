@@ -80,7 +80,7 @@ class _ControllerScreenState extends State<ControllerScreen> {
             color: Colors.white,
           ),
           Icon(
-            Icons.settings,
+            Icons.assistant_outlined,
             size: 30,
             color: Colors.white,
           )
