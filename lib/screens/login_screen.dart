@@ -30,6 +30,49 @@ class _LoginScreenState extends State<LoginScreen> {
   }
   return false;
   }
+  
+}
+
+Future _resetPassword()async{
+  await showModalBottomSheet(isScrollControlled: true,context: context, builder: (BuildContext context){
+    final TextEditingController emailTextField = TextEditingController();
+    return Padding(padding: EdgeInsets.only(
+      top: 20,
+        left: 20,
+        right: 20,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 20
+    ),child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Enter your login email address to reset the password.", textAlign: TextAlign.center
+        ),
+
+        TextField(
+          controller: emailTextField,
+          decoration:const InputDecoration(hintText: "example@gmail.com"),
+        ),
+
+        MaterialButton(onPressed: ()async{
+          try{
+            await FirebaseAuth.instance.sendPasswordResetEmail(email: emailTextField.text);
+            showDialog(context: context, builder: (BuildContext context){
+              return AlertDialog(
+                content: Text("Reset password link is sent to the email."),
+              );
+            });
+          }on FirebaseAuthException catch(e){
+            print(e);
+            showDialog(context: context, builder: (BuildContext context){
+              return AlertDialog(
+                content: Text("Something went wrong!"),
+              );
+            });
+          }
+        },color: Colors.blue.shade700,child:const Text("Reset password"))
+      ],
+    ),);
+  });
 }
   @override
   Widget build(BuildContext context) {
@@ -66,7 +109,8 @@ class _LoginScreenState extends State<LoginScreen> {
           controller: _username,
           decoration:const InputDecoration(
             border: InputBorder.none,
-            hintText: "username or email"
+            hintText: "username or email",
+            suffixIcon: Icon(Icons.mail_rounded,size: 16,),
           ),
          )),
          TextFieldContainer(child: TextField(
@@ -74,7 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
           controller: _password,
           decoration:const InputDecoration(
             border: InputBorder.none,
-            hintText: "password"
+            hintText: "password",
+            suffixIcon: Icon(Icons.key_rounded,size: 16,)
           ),
          )),
       
@@ -82,7 +127,9 @@ class _LoginScreenState extends State<LoginScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
         children: [
-              TextButton(onPressed: (){},
+              TextButton(onPressed: ()async{
+                await _resetPassword();
+              },
               style:const ButtonStyle(
                 padding: MaterialStatePropertyAll(
                   EdgeInsets.fromLTRB(0, 0, 45,0)
@@ -100,13 +147,14 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: ()async{
             bool isSuccess =await _signInWithUsernameAndPassword(_username.text, _password.text);
             if(isSuccess == true){
+               Navigator.pushNamed(context,'/controller_screeen');
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("You are logged in.", style: TextStyle(color: Colors.white),),
                     backgroundColor: Colors.grey,
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     dismissDirection: DismissDirection.up,
                   ));
-              Navigator.pushNamed(context, '/controller_screeen');
+              
             }else{
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Something wrong! try again.", style: TextStyle(color: Colors.white),),

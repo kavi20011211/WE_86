@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite_v2/tflite_v2.dart';
 
@@ -12,9 +14,13 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
 
+  
+
   File? _selectedImage;
   List? _recognitions;
   bool isModelLoaded = false;
+  // List<dynamic> dataList = jsonDecode();
+  // Map<String,dynamic> data = jsonDecode();
 
     @override
   void initState() {
@@ -80,6 +86,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         color: Colors.white,
         height: MediaQuery.of(context).size.height,
@@ -152,7 +159,16 @@ class _CameraScreenState extends State<CameraScreen> {
                     borderRadius: BorderRadius.circular(50)
                   ),
                   child: IconButton(onPressed: (){
-                     runModelOnImage(_selectedImage!);
+                     if(_selectedImage!=null){
+                      runModelOnImage(_selectedImage!);
+                     }else{
+                      showDialog(context: context, builder: (BuildContext context){
+                          return const AlertDialog(
+                          content: Text("Select an image before run this."),
+                            );
+                            });
+                     }
+                     
                   },icon:const Icon(Icons.search), color: Colors.white),
                 ),
                 const SizedBox(width: 20),
@@ -175,9 +191,13 @@ class _CameraScreenState extends State<CameraScreen> {
               fontWeight: FontWeight.w900
             ),),
             const SizedBox(height: 10),
+
+            if(_recognitions?[0]["label"].toString() != null)
+              _showMatchingColours(changeTheLabelToColor(_recognitions?[0]["label"].toString()??""))
             
           ],
         ),
+
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -214,4 +234,45 @@ class _CameraScreenState extends State<CameraScreen> {
       _selectedImage = File(returnImage.path);
     });
   }
+
+ _showMatchingColours(String colour){
+    final CollectionReference _colours = FirebaseFirestore.instance.collection('colours');
+    return  Container(
+        child: StreamBuilder(
+          stream: _colours.where("colour",isEqualTo: colour).snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot>streamSnapshot) {
+            if(streamSnapshot.hasData){ 
+              final DocumentSnapshot documentSnapshot =streamSnapshot.data!.docs[0];
+               return  SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Row(
+                  children: [
+                    for(int i=0; i<=6;i++)
+                    Expanded(
+                      child: ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        children:[
+                          Padding(padding:const EdgeInsets.all(3),
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            color: Color(int.parse(documentSnapshot["hexCode"][i])),
+                            shape: BoxShape.circle
+                          ),
+                          child: Center(child: Text(documentSnapshot["matchingColour"][i]),),
+                        ),),
+                        ] 
+                      ),
+                    )
+                  ],
+                ),
+               );
+      }return const Center(child: CircularProgressIndicator());}
+      )
+      );
+  }
+
 }
+
