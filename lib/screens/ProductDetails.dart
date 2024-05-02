@@ -65,7 +65,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                       children: [
                        ClipRRect(
                         borderRadius:const BorderRadius.only(topLeft: Radius.circular(16.0),topRight: Radius.circular(16.0)),
-                        child: Image.network(data?["image"],height: 200,fit: BoxFit.cover,width: double.infinity,)
+                        child: Image.network(data?["image"],height: 200,fit: BoxFit.cover,width: double.infinity,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Text('Failed to load image');
+                        },)
                        ),
 
                        Padding(padding: const EdgeInsets.all(8.0),
