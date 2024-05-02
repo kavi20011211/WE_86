@@ -1,40 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoriesWidget extends StatelessWidget {
+  final CollectionReference _categories =
+      FirebaseFirestore.instance.collection('categories');
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          for (int i = 1; i < 6; i++)
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "images/login.jpg",
-                    width: 40,
-                    height: 40,
-                  ),
-                  Text(
-                    "Men's Cloths",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(255, 0, 21, 255),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
+    return Container(
+      color: const Color(0XFFE5DECA),
+      height: 100,
+      child: StreamBuilder(
+          stream: _categories.snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+            if (streamSnapshot.hasData) {
+              return Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal, // Changed to horizontal scroll
+                  itemCount: streamSnapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    final DocumentSnapshot documentSnapshot =
+                        streamSnapshot.data!.docs[index];
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(3, 20, 3, 3),
+                      child: SizedBox(
+                        width: 250,
+                        child: ListTile(
+                          tileColor: const Color(0XFFE5DECA),
+                          leading: Container(
+                            child: Transform.scale(
+                              scale: 0.9,
+                              child: Image.network(
+                                documentSnapshot["image"],
+                                height: 80,
+                                width: 80,
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            documentSnapshot["productsName"],
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
     );
   }
 }
