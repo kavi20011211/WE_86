@@ -62,6 +62,7 @@ class _TestScreenState extends State<TestScreen> {
                     // Handle Skip the Test
 
                     Navigator.pushNamed(context, '/home_screen');
+                    Color.fromARGB(255, 255, 255, 255);
                   },
                   child: Text('Skip the Test'),
                 ),
