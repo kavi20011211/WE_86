@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
-
+import 'package:shade_style/themes/theme_data.dart';
 import 'package:shade_style/widgets/ColorBlindPicwidget.dart';
 
 class TestScreen extends StatefulWidget {
-  var isDarkTheme;
-  // TestScreen({required this.isDarkTheme});
+  final Function(ThemeData) onThemeChanged;
+
+  TestScreen({required this.onThemeChanged});
 
   @override
   State<TestScreen> createState() => _TestScreenState();
 }
 
 class _TestScreenState extends State<TestScreen> {
+  ThemeData _currentTheme = lightTheme; // Default theme
+
+  void _setTheme(ThemeData theme) {
+    setState(() {
+      _currentTheme = theme;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF164650),
         leading: const Icon(Icons.abc),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: ListView(
+        shrinkWrap: true,
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -30,40 +38,78 @@ class _TestScreenState extends State<TestScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.isDarkTheme = !widget.isDarkTheme;
-                    });
-                  },
-                  child: Text('Option 1'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        final newTheme = lightTheme;
+                        widget.onThemeChanged(newTheme);
+                        Navigator.pushNamed(context, '/');
+                      });
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(Size(60, 40)),
+                    ),
+                    child: Text('Option 1'),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.isDarkTheme = !widget.isDarkTheme;
-                    });
-                  },
-                  child: Text('Option 2'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        final newTheme = Full_Color_Blind_Theme;
+                        widget.onThemeChanged(newTheme);
+                        Navigator.pushNamed(context, '/');
+                      });
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(Size(60, 40)),
+                    ),
+                    child: Text('Option 2'),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle Option 3
-                    print('Option 3 selected');
-                  },
-                  child: Text('Option 3'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        final newTheme = Red_Green_Theme;
+                        widget.onThemeChanged(newTheme);
+                        Navigator.pushNamed(context, '/');
+                      });
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(Size(60, 40)),
+                    ),
+                    child: Text('Option 3'),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('I can see all'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        final newTheme = Blue_Yellow_Theme;
+                        widget.onThemeChanged(newTheme);
+                        Navigator.pushNamed(context, '/');
+                      });
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(Size(60, 40)),
+                    ),
+                    child: Text('I can see all'),
+                  ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    // Handle Skip the Test
-
-                    Navigator.pushNamed(context, '/home_screen');
-                  },
-                  child: Text('Skip the Test'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: Text('Skip the Test'),
+                  ),
                 ),
               ],
             ),

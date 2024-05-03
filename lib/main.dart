@@ -7,22 +7,36 @@ import 'package:shade_style/screens/ProductDetails.dart';
 import 'package:shade_style/screens/TestScreen.dart';
 import 'package:shade_style/screens/profile_page.dart';
 import 'package:shade_style/screens/register_screen.dart';
+import 'package:shade_style/themes/theme_data.dart';
 // import 'package:shade_style/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeData _currentTheme = lightTheme;
+
+  void changeTheme(ThemeData newTheme) {
+    setState(() {
+      _currentTheme = newTheme;
+    });
+  }
 
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: _currentTheme,
+      initialRoute: '/test_screen',
       routes: {
         // '/': (context) => const SplashScreen(),
         '/': (context) => const AuthPage(),
@@ -31,7 +45,7 @@ class MyApp extends StatelessWidget {
         '/profile_screen': (context) => const ProfileScreen(),
         '/home_screen': (context) => HomePage(),
         '/product': (context) => ProductDetails(),
-        '/test_screen': (context) => TestScreen()
+        '/test_screen': (context) => TestScreen(onThemeChanged: changeTheme),
       },
     );
   }
