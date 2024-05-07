@@ -4,6 +4,7 @@ import 'package:shade_style/authPage.dart';
 import 'package:shade_style/controller_screen.dart';
 import 'package:shade_style/screens/HomePage.dart';
 import 'package:shade_style/screens/ProductDetails.dart';
+import 'package:shade_style/screens/SpeechScreen.dart';
 import 'package:shade_style/screens/TestScreen.dart';
 import 'package:shade_style/screens/profile_page.dart';
 import 'package:shade_style/screens/register_screen.dart';
@@ -30,7 +31,6 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,6 +46,7 @@ class _MyAppState extends State<MyApp> {
         '/home_screen': (context) => HomePage(),
         '/product': (context) => ProductDetails(),
         '/test_screen': (context) => TestScreen(onThemeChanged: changeTheme),
+        '/assistant': (context) => const SpeechScreen(),
       },
     );
   }
