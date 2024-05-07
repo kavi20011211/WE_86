@@ -38,6 +38,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
 
           RoundedButton(child: TextButton(onPressed: ()async{
+            if(fieldTextBox.text.isEmpty){
+              showDialog(context: context, builder: (BuildContext context){
+              return AlertDialog(
+                content: Text("Field is Empty."),
+              );
+            });
+            }
             await _user.doc(documentSnapshot.id)
             .update({fieldname:fieldTextBox.text});
             fieldTextBox.text='';
