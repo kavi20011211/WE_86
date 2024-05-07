@@ -7,7 +7,6 @@ import 'package:shade_style/screens/ProductDetails.dart';
 import 'package:shade_style/screens/TestScreen.dart';
 import 'package:shade_style/screens/profile_page.dart';
 import 'package:shade_style/screens/register_screen.dart';
-// import 'package:shade_style/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +23,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        // '/': (context) => const SplashScreen(),
         '/': (context) => const AuthPage(),
         '/register': (context) => const RegisterScreen(),
         '/controller_screeen': (context) => const ControllerScreen(),
