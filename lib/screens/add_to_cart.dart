@@ -13,7 +13,6 @@ class _AddtoCartScreenState extends State<AddtoCartScreen> {
   final CollectionReference _addtocart = FirebaseFirestore.instance.collection('addtocart'); 
 
 
-
 // Methods of the page
 Future <void> _deleteCartItem(String productID) async{
   await _addtocart.doc(productID).delete();
@@ -57,7 +56,7 @@ Future <void> _deleteCartItem(String productID) async{
                   fontWeight: FontWeight.bold
                 ),),
                 tileColor:const Color(0xFF2C2430),
-                subtitle:const Text("No description", style:const TextStyle(
+                subtitle: Text(documentSnapshot['price'].toString(), style:const TextStyle(
                   color: Color(0xFFF7EEC9),
                 ),),
                 onLongPress: () {
@@ -67,14 +66,23 @@ Future <void> _deleteCartItem(String productID) async{
 
                 
               ),
-              const Divider(height: 5.0,thickness: 0.8,)
+              const Divider(height: 5.0,thickness: 0.8,),
             ],
               );},
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              padding:const EdgeInsets.all(5),),
+              padding:const EdgeInsets.all(5),
+              ),
             ),
-          )]
+          ),
+          Padding(padding:const EdgeInsets.only(bottom: 100),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+            Padding(padding: EdgeInsets.only(right: 15),
+            child: TextButton(onPressed: (){}, child:const Text("Checkout")),)
+          ],),)
+          ]
         );
             }
           
@@ -90,7 +98,7 @@ Future <void> _deleteCartItem(String productID) async{
           return const AlertDialog(
             actions: [Icon(Icons.book_rounded,color: Colors.green,)],
             title: Text("Guide",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-            content: Text("You can add items to your wishlist by clicking heart button. You can delete an item by a longpress"),
+            content: Text("You can add items to your wishlist by clicking add to cart button. You can delete an item by a longpress"),
           );
         });
       },backgroundColor: const Color(0xFFE6940F),child:const Icon(Icons.question_mark_rounded,color: Colors.white,)),

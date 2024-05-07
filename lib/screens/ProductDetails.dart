@@ -14,11 +14,12 @@ class _ProductDetailsState extends State<ProductDetails> {
       final FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference _addtocart = FirebaseFirestore.instance.collection('addtocart');
 
-  Future<void>_addToCartList(String productName)async{
+  Future<void>_addToCartList(String productName, int price)async{
     String currentUserID = auth.currentUser!.uid;
     try{
       await _addtocart.doc().set({
         "productName":productName,
+        "price":price,
         "userID":currentUserID
       });
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -40,194 +41,84 @@ class _ProductDetailsState extends State<ProductDetails> {
   
   @override
   Widget build(BuildContext context) {
+    final dynamic data = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xFF164650),
+          actions: [IconButton(onPressed: (){}, icon:const Icon(Icons.hearing_rounded))],
         ),
-        body: StreamBuilder(
-          stream: _products.snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-            if (streamSnapshot.hasData) {
-              return ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    final DocumentSnapshot documentSnapshot =
-                        streamSnapshot.data!.docs[0];
-                    return Column(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+
+          child: StreamBuilder<DocumentSnapshot>(
+            stream: _products.doc(data).snapshots(),
+            builder: (context,AsyncSnapshot<DocumentSnapshot>documentSnapshot){
+              if(documentSnapshot.hasData){
+                final DocumentSnapshot<Object?>?data = documentSnapshot.data;
+                return Card(
+                  margin:const EdgeInsets.only(left: 10,right: 10,top: 20, bottom: 20),
+                  child: Container(
+
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Image.network(
-                            "https://m.media-amazon.com/images/I/41ERYvjQ+DS._AC_SL1000_.jpg",
-                            height: 300,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          child: Row(
+                       ClipRRect(
+                        borderRadius:const BorderRadius.only(topLeft: Radius.circular(16.0),topRight: Radius.circular(16.0)),
+                        child: Image.network(data?["image"],height: 200,fit: BoxFit.cover,width: double.infinity,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Text('Failed to load image');
+                        },)
+                       ),
+
+                       Padding(padding: const EdgeInsets.all(8.0),
+                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(data?["ProductTitle"],style:const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                          const SizedBox(height: 8.0,),
+                          Text(data?["ProductDescription"],),
+                          const SizedBox(height: 8.0,),
+                          Row(children: [
+                            const Text("Sizes: ",style: TextStyle(fontWeight: FontWeight.w700),),
+                            for(String i in data?["size"])
+                             Padding(padding:const EdgeInsets.only(left: 3),
+                            child: Text(" $i |"),)
+                          ],),
+                          const SizedBox(height: 8.0,),
+                          Row(children: [
+                            const Text("Colours: ",style: TextStyle(fontWeight: FontWeight.w700),),
+                            for(String i in data?["color"])
+                             Padding(padding:const EdgeInsets.only(left: 3),
+                            child: Text(" $i |"),)
+                          ],),
+                          const SizedBox(height: 8.0,),
+                          Row(children: [
+                            const Text("Price: ",style: TextStyle(fontWeight: FontWeight.w700),),
+                             Padding(padding:const EdgeInsets.only(left: 3),
+                            child: Text(data?["price"].toString()??""),)
+                          ],),
+
+                          
+                          Row(
                             children: [
-                              Text(
-                                documentSnapshot['ProductTitle'],
-                                style:const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              IconButton(onPressed: ()async{await _addToCartList(data?["ProductTitle"], data?["price"]);}, icon:const Icon(Icons.add_shopping_cart_rounded,))
                             ],
-                          ),
-                        ),
-                        Container(
-                          padding:const EdgeInsets.only(
-                            left: 20,
-                            right: 20,
-                          ),
-                          //height: 70,
-                          alignment: Alignment.topLeft,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  documentSnapshot['ProductDescription'],
-                                  textAlign: TextAlign.justify,
-                                  style:const TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding:const EdgeInsets.only(left: 20, top: 20),
-                          child: Row(
-                            children: [
-                              const Text(
-                                "Size",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              const Padding(padding: EdgeInsets.only(left: 26)),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Row(
-                                children: [
-                                  for (int i = 0; i < 5; i++)
-                                    Container(
-                                      height: 30,
-                                      width: 30,
-                                      alignment: Alignment.center,
-                                      margin:
-                                         const EdgeInsets.symmetric(horizontal: 6),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(30),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 2,
-                                            blurRadius: 8,
-                                          )
-                                        ],
-                                      ),
-                                      child:const Text(
-                                        '1',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding:const EdgeInsets.only(left: 20, top: 20),
-                          child: Row(
-                            children: [
-                              const Text(
-                                "Colour",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Row(
-                                children: [
-                                  for (int i = 0; i < 5; i++)
-                                    Container(
-                                      height: 30,
-                                      width: 30,
-                                      alignment: Alignment.center,
-                                      margin:
-                                        const  EdgeInsets.symmetric(horizontal: 6),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(30),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 2,
-                                            blurRadius: 8,
-                                          )
-                                        ],
-                                      ),
-                                      child:const Text(
-                                        's',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding:const EdgeInsets.only(top: 30, bottom: 25),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Add your first button click logic here
-                                  print('Button 1 clicked!');
-                                },
-                                child:const Text(
-                                  'Buy Now',
-                                ),
-                              ),
-                              OutlinedButton(
-                                onPressed: () {
-                                  // Add your second button click logic here
-                                  _addToCartList(documentSnapshot['ProductTitle'].toString());
-                                },
-                                child:const Text(
-                                  'Add to cart',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                          )
+                        ],
+                       ),)
+                       
                       ],
-                    );
-                  });
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
-        ));
+                    ),
+                  ),
+                );
+              }else{
+                return const Center(child: CircularProgressIndicator(),);
+              }
+            },
+            ),
+        ),
+        );
+        
   }
 }

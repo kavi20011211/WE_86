@@ -73,7 +73,9 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                ItemsWidget(),
+                Padding(
+                  padding:const EdgeInsets.all(24),
+                  child: ItemsWidget()),
               ],
             ),
           ),

@@ -1,103 +1,106 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+class ItemsWidget extends StatefulWidget {
+  @override
+  State<ItemsWidget> createState() => _ItemsWidgetState();
+}
 
-class ItemsWidget extends StatelessWidget {
+class _ItemsWidgetState extends State<ItemsWidget> {
+  final CollectionReference _products =
+      FirebaseFirestore.instance.collection('product');
+
+            final FirebaseAuth auth = FirebaseAuth.instance;
+
+  final CollectionReference _addtocart = FirebaseFirestore.instance.collection('addtocart');
+
+  Future<void>_addToCartList(String productName, int price)async{
+    String currentUserID = auth.currentUser!.uid;
+    try{
+      await _addtocart.doc().set({
+        "productName":productName,
+        "price":price,
+        "userID":currentUserID
+      });
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text("You have successfully added this product.", style: TextStyle(color: Colors.white),),
+    backgroundColor: Colors.grey,
+    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+    dismissDirection: DismissDirection.up,
+    ));
+    }catch (e){
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text("Something went wrong.", style: TextStyle(color: Colors.white),),
+    backgroundColor: Colors.grey,
+    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+    dismissDirection: DismissDirection.up,
+    ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      childAspectRatio: 0.68,
-      crossAxisCount: 2,
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      children: [
-        for (int i = 1; i < 6; i++)
-          Container(
-            padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
+    return Container(
+      child: StreamBuilder(stream: _products.snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){
+        if(streamSnapshot.hasData){
+          return GridView.builder(gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
+          crossAxisSpacing: 12.0,
+          mainAxisSpacing: 12.0,
+          mainAxisExtent: 300),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: streamSnapshot.data!.docs.length,
+           itemBuilder: (context,index){
+            final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+
+            return Container(
+              decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: Colors.red.shade100,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ClipRRect(
+                  borderRadius:const BorderRadius.only(topLeft: Radius.circular(16.0),topRight: Radius.circular(16.0)),
+                  child: Image.network(documentSnapshot["image"],height: 170,fit: BoxFit.cover,width: double.infinity,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Text('Failed to load image');
+                  },
+                  )
+                ),
+                Padding(padding:const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 15, 29, 183),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Icon(
-                        Icons.favorite_border_outlined,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    )
-                  ],
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      child: Image.asset(
-                        "images/login.jpg",
-                        height: 80,
-                        width: 80,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/product');
-                      },
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(bottom: 8),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Product Title",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Write a Description",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Rs. 1500",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Icon(
-                        Icons.shopping_cart_checkout,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
+                  Text(documentSnapshot["ProductTitle"], style:const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                  ),),
+                  const SizedBox(height: 8.0,),
+                  Text(documentSnapshot["price"].toString(),style: const TextStyle(
+                    fontWeight: FontWeight.normal
+                  ),),
+                ],),),
+                const SizedBox(height: 8.0,),
+                Row(
+                  children: [IconButton(onPressed: ()async{
+                    await _addToCartList(documentSnapshot["ProductTitle"], documentSnapshot["price"]);
+                  }, icon:const Icon(Icons.add_shopping_cart_rounded)),
+                  IconButton(onPressed: (){
+                    Navigator.pushNamed(context, '/product', arguments: documentSnapshot.id);
+                  }, icon:const Icon(Icons.more_vert_rounded))],
                 )
               ],
             ),
-          )
-      ],
+            );
+           });
+        }else{
+          return const Center(child: CircularProgressIndicator(),);
+        }
+      }),
     );
   }
 }
