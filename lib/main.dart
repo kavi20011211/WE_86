@@ -8,8 +8,10 @@ import 'package:shade_style/screens/SpeechScreen.dart';
 import 'package:shade_style/screens/TestScreen.dart';
 import 'package:shade_style/screens/profile_page.dart';
 import 'package:shade_style/screens/register_screen.dart';
+
 import 'package:shade_style/themes/theme_data.dart';
-// import 'package:shade_style/screens/splash_screen.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +40,6 @@ class _MyAppState extends State<MyApp> {
       theme: _currentTheme,
       initialRoute: '/test_screen',
       routes: {
-        // '/': (context) => const SplashScreen(),
         '/': (context) => const AuthPage(),
         '/register': (context) => const RegisterScreen(),
         '/controller_screeen': (context) => const ControllerScreen(),
