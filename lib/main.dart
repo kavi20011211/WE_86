@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeData _currentTheme = lightTheme;
+  ThemeData _currentTheme = Full_Color_Blind_Theme;
 
   void changeTheme(ThemeData newTheme) {
     setState(() {

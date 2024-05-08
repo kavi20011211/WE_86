@@ -141,6 +141,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
+                                            color: Colors.black,
                                           ),
                                         ),
                                         Row(
@@ -153,7 +154,10 @@ class _SpeechScreenState extends State<SpeechScreen> {
                                               ),
                                             ),
                                             IconButton(
-                                              icon: Icon(Icons.volume_up),
+                                              icon: Icon(
+                                                Icons.volume_up,
+                                                color: Colors.black,
+                                              ),
                                               onPressed: () {
                                                 String announcement =
                                                     'Product  Name  is  $productTitle\n'
@@ -194,7 +198,6 @@ class _SpeechScreenState extends State<SpeechScreen> {
           _speechToText.isNotListening ? Icons.mic_off : Icons.mic,
           color: Colors.white,
         ),
-        backgroundColor: Color.fromARGB(205, 7, 36, 112),
       ),
     );
   }

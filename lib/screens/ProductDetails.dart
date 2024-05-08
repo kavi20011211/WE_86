@@ -49,12 +49,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     final dynamic data = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF164650),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.hearing_rounded))
-        ],
-      ),
+      appBar: AppBar(),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

@@ -12,7 +12,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-  ThemeData _currentTheme = lightTheme; // Default theme
+  ThemeData _currentTheme = lightTheme;
 
   void _setTheme(ThemeData theme) {
     setState(() {
@@ -43,7 +43,7 @@ class _TestScreenState extends State<TestScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        final newTheme = lightTheme;
+                        final newTheme = Red_Green_Theme;
                         widget.onThemeChanged(newTheme);
                         Navigator.pushNamed(context, '/');
                       });
@@ -59,7 +59,7 @@ class _TestScreenState extends State<TestScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        final newTheme = Full_Color_Blind_Theme;
+                        final newTheme = Blue_Yellow_Theme;
                         widget.onThemeChanged(newTheme);
                         Navigator.pushNamed(context, '/');
                       });
@@ -75,7 +75,7 @@ class _TestScreenState extends State<TestScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        final newTheme = Red_Green_Theme;
+                        final newTheme = Full_Color_Blind_Theme;
                         widget.onThemeChanged(newTheme);
                         Navigator.pushNamed(context, '/');
                       });
@@ -91,7 +91,7 @@ class _TestScreenState extends State<TestScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        final newTheme = Blue_Yellow_Theme;
+                        final newTheme = lightTheme;
                         widget.onThemeChanged(newTheme);
                         Navigator.pushNamed(context, '/');
                       });

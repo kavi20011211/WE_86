@@ -69,13 +69,12 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Color.fromARGB(255, 15, 29, 183),
+                      color: Color.fromRGBO(0, 0, 0, 1),
                     ),
                   ),
                 ),
                 Padding(
-                  padding:const EdgeInsets.all(24),
-                  child: ItemsWidget()),
+                    padding: const EdgeInsets.all(24), child: ItemsWidget()),
               ],
             ),
           ),

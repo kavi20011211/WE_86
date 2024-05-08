@@ -29,29 +29,35 @@ class _ControllerScreenState extends State<ControllerScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profile_screen');
-              },
-              icon: const Icon(Icons.person_2_rounded)),
+            onPressed: () {
+              Navigator.pushNamed(context, '/profile_screen');
+            },
+            icon: const Icon(Icons.person_2_rounded),
+            color: Theme.of(context).iconTheme.color,
+          ),
           IconButton(
-              onPressed: () {
-                bool isSuccuss = signOut();
-                if (isSuccuss == true) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                      "You have logged out succussfully.",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.grey,
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    dismissDirection: DismissDirection.up,
-                  ));
-                }
-              },
-              icon: const Icon(Icons.logout_rounded))
+            onPressed: () {
+              bool isSuccuss = signOut();
+              if (isSuccuss == true) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                    "You have logged out succussfully.",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: Colors.grey,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  dismissDirection: DismissDirection.up,
+                ));
+              }
+            },
+            icon: const Icon(Icons.logout_rounded),
+            color: Theme.of(context).iconTheme.color,
+          )
         ],
-        leading: const Icon(Icons.abc),
-        backgroundColor: const Color(0xFF164650),
+        leading: Icon(
+          Icons.abc,
+          color: Colors.white,
+        ),
       ),
       body: _selectedIndex == 3
           ? const AddtoCartScreen()
@@ -65,6 +71,8 @@ class _ControllerScreenState extends State<ControllerScreen> {
                           ? HomePage()
                           : null,
       bottomNavigationBar: CurvedNavigationBar(
+        color: Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
+            Colors.black,
         backgroundColor: Colors.transparent,
         onTap: (index) {
           setState(() {
@@ -72,7 +80,6 @@ class _ControllerScreenState extends State<ControllerScreen> {
           });
         },
         height: 50,
-        color: const Color(0xFF164650),
         items: const [
           Icon(
             Icons.home,
