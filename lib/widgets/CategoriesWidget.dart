@@ -7,7 +7,7 @@ class CategoriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0XFFE5DECA),
+      color: Theme.of(context).floatingActionButtonTheme.backgroundColor,
       height: 100,
       child: StreamBuilder(
           stream: _categories.snapshots(),
@@ -15,7 +15,8 @@ class CategoriesWidget extends StatelessWidget {
             if (streamSnapshot.hasData) {
               return Expanded(
                 child: ListView.builder(
-                  scrollDirection: Axis.horizontal, // Changed to horizontal scroll
+                  scrollDirection:
+                      Axis.horizontal, // Changed to horizontal scroll
                   itemCount: streamSnapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     final DocumentSnapshot documentSnapshot =
@@ -38,7 +39,9 @@ class CategoriesWidget extends StatelessWidget {
                           ),
                           title: Text(
                             documentSnapshot["productsName"],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         ),
                       ),

@@ -114,10 +114,11 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Color.fromARGB(255, 15, 29, 183),
+                      color: Color.fromRGBO(0, 0, 0, 1),
                     ),
                   ),
                 ),
+
 
                 StreamBuilder(
                   stream: _products.snapshots(),

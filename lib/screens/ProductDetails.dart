@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class ProductDetails extends StatefulWidget {
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -11,38 +10,46 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   final CollectionReference _products =
       FirebaseFirestore.instance.collection('product');
-      final FirebaseAuth auth = FirebaseAuth.instance;
-  final CollectionReference _addtocart = FirebaseFirestore.instance.collection('addtocart');
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final CollectionReference _addtocart =
+      FirebaseFirestore.instance.collection('addtocart');
 
-  Future<void>_addToCartList(String productName, int price)async{
+  Future<void> _addToCartList(String productName, int price) async {
     String currentUserID = auth.currentUser!.uid;
-    try{
+    try {
       await _addtocart.doc().set({
-        "productName":productName,
-        "price":price,
-        "userID":currentUserID
+        "productName": productName,
+        "price": price,
+        "userID": currentUserID
       });
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    content: Text("You have successfully added this product.", style: TextStyle(color: Colors.white),),
-    backgroundColor: Colors.grey,
-    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-    dismissDirection: DismissDirection.up,
-    ));
-    }catch (e){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          "You have successfully added this product.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.grey,
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        dismissDirection: DismissDirection.up,
+      ));
+    } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    content: Text("Something went wrong.", style: TextStyle(color: Colors.white),),
-    backgroundColor: Colors.grey,
-    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-    dismissDirection: DismissDirection.up,
-    ));
+        content: Text(
+          "Something went wrong.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.grey,
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        dismissDirection: DismissDirection.up,
+      ));
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final dynamic data = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
+
         appBar: AppBar(
           backgroundColor: const Color(0xFF164650),
           actions: [IconButton(onPressed: (){}, icon:const Icon(Icons.hearing_rounded))],
@@ -111,14 +118,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ],
                     ),
                   ),
-                );
-              }else{
-                return const Center(child: CircularProgressIndicator(),);
-              }
-            },
-            ),
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
-        );
-        
+      ),
+    );
   }
 }
