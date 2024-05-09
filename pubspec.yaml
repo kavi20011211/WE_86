@@ -42,8 +42,6 @@ dependencies:
   image_picker: ^1.0.7
   image: ^4.1.7
   tflite_v2: ^1.0.0
-  speech_to_text: ^6.6.1
-  flutter_tts: ^3.0.3
   
 
 dev_dependencies:
